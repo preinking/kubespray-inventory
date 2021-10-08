@@ -1,0 +1,70 @@
+all:
+  hosts:
+    alt-k8s03001.alfa.local:
+      ansible_host: 172.20.56.19
+      ip: 172.20.56.19
+      access_ip: 172.20.56.19
+      node_labels:
+        px/enabled: "false"
+    alt-k8s13002.alfa.local:
+      ansible_host: 172.20.56.20
+      ip: 172.20.56.20
+      access_ip: 172.20.56.20
+      node_labels:
+        px/enabled: "false"
+    alt-k8s03003.alfa.local:
+      ansible_host: 172.20.56.21
+      ip: 172.20.56.21
+      access_ip: 172.20.56.21
+      node_labels:
+        px/enabled: "false"
+    alt-k8s03005.alfa.local:
+      ansible_host: 172.20.56.23
+      ip: 172.20.56.23
+      access_ip: 172.20.56.23
+      node_labels:
+        px/zone: onprem-dca
+        px/region: onprem-1
+        px/metadata-node: "true"
+        px/enabled: "true"
+    alt-k8s13004.alfa.local:
+      ansible_host: 172.20.56.22
+      ip: 172.20.56.22
+      access_ip: 172.20.56.22
+      node_labels:
+        px/zone: onprem-dcb
+        px/region: onprem-1
+        px/metadata-node: "true"
+        px/enabled: "true"
+    alt-k8s13006.alfa.local:
+      ansible_host: 172.20.56.24
+      ip: 172.20.56.24
+      access_ip: 172.20.56.24
+      node_labels:
+        px/zone: onprem-dcc
+        px/region: onprem-1
+        px/metadata-node: "true"
+        px/enabled: "true"
+  children:
+    kube-master:
+      hosts:
+        alt-k8s03001.alfa.local:
+        alt-k8s13002.alfa.local:
+        alt-k8s03003.alfa.local:
+    kube-node:
+      hosts:
+        alt-k8s13004.alfa.local:
+        alt-k8s03005.alfa.local:
+        alt-k8s13006.alfa.local:
+    etcd:
+      hosts:
+        alt-k8s03001.alfa.local:
+          etcd_member_name: etcd1
+        alt-k8s13002.alfa.local:
+          etcd_member_name: etcd2
+        alt-k8s03003.alfa.local:
+          etcd_member_name: etcd3
+    k8s-cluster:
+      children:
+        kube_control_plane:
+        kube_node:

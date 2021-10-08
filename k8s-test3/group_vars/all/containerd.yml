@@ -1,0 +1,9 @@
+---
+# Please see roles/container-engine/containerd/defaults/main.yml for more configuration options
+
+containerd_debug_level: "warning"
+
+containerd_registries:
+  "docker.io": "https://registry-1.docker.io"
+  "nexus.cloud.local:448": "https://alp-apu00004.alfa.local:448"
+  "nexus.cloud.local:449": "https://alp-apu00004.alfa.local:449"
